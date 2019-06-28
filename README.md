@@ -76,7 +76,7 @@ $$
 
 而这个代表了一种星形的收缩（star-contraction）。
 
-所以当`einsum`不再省略输出指标，我们可以定义更加丰富的运算，这些新引入的规范拓展了**张量网络**，这类记号一般认为与机器学习概率图中的**factor graph** 等价，也在某些文献中被称为**拓展-张量网络**[引文]。
+所以当`einsum`不再省略输出指标，我们可以定义更加丰富的运算，这些新引入的规范拓展了**张量网络**，这类记号一般认为与机器学习概率图中的**factor graph** 等价，也在某些文献中被称为**拓展-张量网络**[引文 1]。
 
 3-涂色问题中定义的张量网络的拓扑与原图同构，原图的顶角映射成为了一个张量，而边映射成为张量的一个收缩维度。于是我们可以用如下代码求解这个问题
 
@@ -155,7 +155,7 @@ dLdB = ein"ij,ik->jk"(A, dLdA)
 
 
 
-自动微分是机器学习给张量网络带来的珍贵礼物，它在物理学中张量网络的自动微分可以计算热力学量，可以变分优化量子力学基态 [引文]。但是这里的例子都是离散的输入的counting问题，自动微分能给我们带来什么呢？考虑这么一个问题，因为我们发现Petersen图没有满足要求的涂色方案，老板们非常生气，告诉我们可以放宽其中1号节点的条件，然后我们应该怎么放宽这些条件呢？
+自动微分是机器学习给张量网络带来的珍贵礼物，它在物理学中张量网络的自动微分可以计算热力学量，可以变分优化量子力学基态 [引文 2]。但是这里的例子都是离散的输入的counting问题，自动微分能给我们带来什么呢？考虑这么一个问题，因为我们发现Petersen图没有满足要求的涂色方案，老板们非常生气，告诉我们可以放宽其中1号节点的条件，然后我们应该怎么放宽这些条件呢？
 
 答案是，怎么放宽都不行！
 
@@ -168,7 +168,5 @@ gradient(x->ein"afl,bhn,cjf,dlh,enj,ago,big,cki,dmk,eom->"(x,s,s,s,s,s,s,s,s,s)[
 
 ## 引文列表
 
-> arXiv:1903.09650
->
-> Differentiable Programming Tensor Networks
-> Hai-Jun Liao, Jin-Guo Liu, Lei Wang, Tao Xiang
+> 1. Glasser, Ivan, Nicola Pancotti, and J. Ignacio Cirac. "Supervised learning with generalized tensor networks." arXiv:1806.05964
+> 2. Hai-Jun Liao, Jin-Guo Liu, Lei Wang, Tao Xiang. "Differentiable Programming Tensor Networks" arXiv:1903.09650
