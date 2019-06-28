@@ -12,7 +12,21 @@ Slides and notebooks for [集智(ji zhi) club](www.swarma.org)
 
 ## Blog: 涂色问题与张量网络
 
-图论中有个重要的问题叫做三涂色（3-coloring）问题，问的是给定一个图，由顶角V和连边E构成，给图片的每个边E上色，可以是RGB（红绿蓝）三色中的一个。问有多少中方式图给这个图的每条边都上色，使得每个顶角相连的三条边的颜色互不相同。作为例子，考虑下图，它的每个顶角的度都是三，即每个顶角有三条边与之相连
+### 学者介绍
+
+刘金国
+
+中国科学院物理研究所博士后
+
+现从事量子计算与机器学习的交叉领域
+
+### 背景介绍
+
+张量网络是物理学中重要的工具，它可以用来研究量子态，量子相变。这个工具具有较强的可解释性，性质简洁，逐渐被更多的领域所喜爱，包括数学研究中的TensorTrain，大数据中的数据压缩，社会科学模型[引文 4]，机器学习的监督学习与无监督学习，都和张量网络息息相关。而今天我们要探讨的一类问题是组合优化问题，与上面的应用场景不同的是，这里用张量网络来数数，涉及的数域也只有整数。首先会介绍如何把组合优化中的数数问题转换为张量网络的收缩，其次讲述自动微分的张量网络对于数数问题有什么启发。
+
+### 正文
+
+图论中有个重要的问题叫做三涂色（3-coloring）问题，问的是给定一个图，由顶角V和连边E构成，给图的每个边E上色，可以是RGB（红绿蓝）三色中的一个。问有一共有多少种方式，使得每个顶角相连的三条边的颜色互不相同。作为例子，考虑下图，它的每个顶角的度都是三，即每个顶角有三条边与之相连
 
 ![petersen-graph](notebooks/images/_cpetersen.png)
 
@@ -120,7 +134,7 @@ ein"abc,bcd,cad->"(C1, C2, C3)
 
 考虑到张量的收缩中对指标的求和并不一定是同时进行，比如我们可以先收缩$（V_1,V_3）$节点，收缩过程设计5个指标，包括1个哑指标（成对消去的指标）,和4个保留的指标，计算复杂度为$O(\chi^5)$ (这里$\chi = 3$)，我们将结果记为$V_{1,3}$。接着收缩$V_{1,3}$与$V_4$，复杂度为$\chi^6$, 接着一次收缩掉$2, 5, 6, 7, 8, 9, 10$。整个收缩过程最大复杂度为$\chi^7$。
 
-当边上定义的变量数$\chi$足够大对应$\chi-coloring$，那么收缩复杂度$\chi^7$和$\chi^{15}$相差是巨大的。不幸的是，确定最优收缩顺序本身是NP-complete困难的，虽然有一些算法（比如图论的treewidth以及一些张量领域的算法）可以求解上百个节点的张量网络，但是更大就不再现实。这些算法为量子计算的模拟，小世界模型的研究提供了便利。
+当边上定义的变量数$\chi$足够大，那么收缩复杂度$\chi^7$和$\chi^{15}$相差是巨大的。不幸的是，确定最优收缩顺序本身是NP-complete困难的，虽然有一些算法（比如图论的treewidth以及一些张量领域的算法）可以求解上百个节点的张量网络，但是更大就不再现实。这些算法为量子计算的模拟[引文 3]，社交网络的研究[引文 4]提供了便利。
 
 ### 自动微分
 
@@ -170,3 +184,5 @@ gradient(x->ein"afl,bhn,cjf,dlh,enj,ago,big,cki,dmk,eom->"(x,s,s,s,s,s,s,s,s,s)[
 
 > 1. Glasser, Ivan, Nicola Pancotti, and J. Ignacio Cirac. "Supervised learning with generalized tensor networks." arXiv:1806.05964
 > 2. Hai-Jun Liao, Jin-Guo Liu, Lei Wang, Tao Xiang. "Differentiable Programming Tensor Networks" arXiv:1903.09650
+> 3. Markov, I. L., & Shi, Y. (n.d.). Simulating quantum computation by contracting tensor networks, 1–21.
+> 4. Yang, Zi, et al. "Social community analysis via a factor graph model." IEEE Intelligent Systems 3 (2010): 58-65.
