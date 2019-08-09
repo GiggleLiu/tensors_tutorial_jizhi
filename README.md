@@ -22,15 +22,17 @@ Slides and notebooks for [集智(ji zhi) club](www.swarma.org)
 
 ### 背景介绍
 
-张量网络是物理学中重要的工具，它可以用来研究量子态，量子相变。这个工具具有较强的可解释性，性质简洁，逐渐被更多的领域所喜爱，包括数学研究中的TensorTrain，大数据中的数据压缩，社会科学模型[引文 4]，机器学习的监督学习与无监督学习，都和张量网络息息相关。而今天我们要探讨的一类问题是组合优化问题，与上面的应用场景不同的是，这里用张量网络来数数，涉及的数域也只有整数。首先会介绍如何把组合优化中的数数问题转换为张量网络的收缩，其次讲述自动微分的张量网络对于数数问题有什么启发。
+张量网络是物理学中重要的工具，它可以用来研究量子态，量子相变。这个工具具有较强的可解释性，性质简洁，逐渐被更多的领域所喜爱，包括数学研究中的TensorTrain [引文 7]，大数据中的数据压缩 [引文 6]，社会科学模型[引文 4]，机器学习中基于矩阵乘积态（MPS）的监督学习与无监督学习 [引文 5]，都和张量网络息息相关。而今天我们要探讨的一类问题是组合优化问题，与上面的应用场景不同的是，这里用张量网络来数数，涉及的数域也只有整数。首先会介绍如何把组合优化中的数数问题转换为张量网络的收缩，其次讲述自动微分的张量网络对于数数问题有什么启发。
 
 ### 正文
 
 图论中有个重要的问题叫做三涂色（3-coloring）问题，问的是给定一个图，由顶角V和连边E构成，给图的每个边E上色，可以是RGB（红绿蓝）三色中的一个。问有一共有多少种方式，使得每个顶角相连的三条边的颜色互不相同。作为例子，考虑下图，它的每个顶角的度都是三，即每个顶角有三条边与之相连
 
-![petersen-graph](notebooks/images/_cpetersen.png)
+<img src="notebooks/images/_cpetersen.png" width="500px"/>
 
-这里给1号顶角的连边给了一种可能的着色，而剩余的连边待定。这个图也叫Petersen图，是图论中一个常见的图，它一共有10个顶角和15条边。因此遍历所有连边的涂色是可能的，它的计算复杂度仅为$3^{15}\approx 1.4\times10^6$，我们不妨用穷举法来解答。穷举过程中需要用到15重循环，循环的变量可以用$a-o$来命名，如下图所示![img](notebooks/images/_petersenijk.png)
+这里给1号顶角的连边给了一种可能的着色，而剩余的连边待定。这个图也叫Petersen图，是图论中一个常见的图，它一共有10个顶角和15条边。因此遍历所有连边的涂色是可能的，它的计算复杂度仅为$3^{15}\approx 1.4\times10^6$，我们不妨用穷举法来解答。穷举过程中需要用到15重循环，循环的变量可以用$a-o$来命名，如下图所示
+
+<img src="notebooks/images/_petersenijk.png" width="500px"/>
 
 下面展示用于求解的[Julia](https://julialang.org/)代码，打开julia的REPL粘贴即可执行
 
@@ -169,7 +171,7 @@ dLdB = ein"ij,ik->jk"(A, dLdA)
 
 
 
-自动微分是机器学习给张量网络带来的珍贵礼物，它在物理学中张量网络的自动微分可以计算热力学量，可以变分优化量子力学基态 [引文 2]。但是这里的例子都是离散的输入的counting问题，自动微分能给我们带来什么呢？考虑这么一个问题，因为我们发现Petersen图没有满足要求的涂色方案，老板们非常生气，告诉我们可以放宽其中1号节点的条件，然后我们应该怎么放宽这些条件呢？
+自动微分是机器学习给张量网络带来的珍贵礼物，它在物理学中张量网络的自动微分可以计算热力学量，可以变分优化量子力学基态 [引文 2]。但是这里的例子都是离散的输入的counting问题，自动微分能给我们带来什么呢？考虑到Petersen图没有满足要求的涂色方案，现在如果允许放宽其中1号节点的约束条件，比如允许1号节点出现重复的颜色，是否可以找到满足新的约束条件的解呢？
 
 答案是，怎么放宽都不行！
 
@@ -186,3 +188,6 @@ gradient(x->ein"afl,bhn,cjf,dlh,enj,ago,big,cki,dmk,eom->"(x,s,s,s,s,s,s,s,s,s)[
 > 2. Hai-Jun Liao, Jin-Guo Liu, Lei Wang, Tao Xiang. "Differentiable Programming Tensor Networks" arXiv:1903.09650
 > 3. Markov, I. L., & Shi, Y. (n.d.). Simulating quantum computation by contracting tensor networks, 1–21.
 > 4. Yang, Zi, et al. "Social community analysis via a factor graph model." IEEE Intelligent Systems 3 (2010): 58-65.
+> 5. Han, Zhao-Yu, et al. "Unsupervised generative modeling using matrix product states." *Physical Review X* 8.3 (2018): 031012.
+> 6. Cichocki, Andrzej. "Era of big data processing: A new approach via tensor networks and tensor decompositions." *arXiv preprint arXiv:1403.2048*(2014).
+> 7. Oseledets, Ivan V. "Tensor-train decomposition." *SIAM Journal on Scientific Computing* 33.5 (2011): 2295-2317.
